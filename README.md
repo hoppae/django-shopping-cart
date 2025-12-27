@@ -1,5 +1,5 @@
 ﻿# Overview
-A Django shopping cart app with an asynchronous, responsive, minimalist, Bootstrap styled template. Supports both ```AnonymousUser``` sessions and authenticated ```User``` sessions. Easily adjustable to account for differing ```Product``` models.
+A Django shopping cart app with an asynchronous, responsive, minimalist, Bootstrap styled template. Supports both ```AnonymousUser``` sessions and authenticated ```User``` sessions. Easily adjusted to account for varying ```Product``` models.
 
 ## Requirements
 - Django 3.x <!-- tested with 3.1.4 -->
@@ -9,7 +9,7 @@ A Django shopping cart app with an asynchronous, responsive, minimalist, Bootstr
 ## Usage
 
 ### Persistent Carts
-To allow persistent carts for authenticated users, one must sync the carts stored in the user session and the database at login, as shown below. This can require a merging of the two carts if both the anonymous session cart and the database cart associated with the authenticating user are populated. All of this is handled by the ```sync_session_and_db(request)``` function.
+To allow persistent carts for authenticated users, one must sync cart states of the user session and database at login, as shown below. This can require merging the two carts if both the anonymous session cart and database cart associated with the authenticating user are populated. All of this is handled by the ```sync_session_and_db(request)``` function.
 
 ```
 class LoginView(auth_views.LoginView):
@@ -22,7 +22,7 @@ class LoginView(auth_views.LoginView):
 ```
 
 ### Using the Provided Forms
-One can populate the ```AddToCartForm()``` in a manner as shown below.
+One can populate ```AddToCartForm``` in the manner shown below.
 
 ```
 form = AddToCartForm() 
@@ -34,10 +34,10 @@ product_choices = [(i, str(product.quantity)+" items - $"+str(product.product_pr
 form.fields["product_choices"].choices = product_choices
 ```
 
-The populated form can be provided to the user via an ```HttpResponse``` context dictionary.
+Form data can be provided to the user via an ```HttpResponse``` context dictionary.
 
-### Handling Product Page Post Requests
-Below is an example of how to handle POST requests sent to a product page with the ```add_to_cart(request, product_id, quantity, reflect_to_db)``` function.
+### Handling Product Page POST Requests
+As shown below, product page POST requests are handled with the ```add_to_cart(request, product_id, quantity, reflect_to_db)``` function.
 
 ```
 products = Product.objects.filter(product_name="...")
